@@ -39,7 +39,7 @@ Your site must at the bare minimum have the following structure:
 ```
 src/
 ├ content/
-│ └ index.hml
+│ └ index.md
 ├ scripts/
 ├ styles/
 └ templates/
@@ -48,7 +48,7 @@ src/
 
 #### Content folder
 
-All items in the content folder will be parsed and placed at the root of the build directory
+All items in the content folder will be parsed and placed at the root of the build directory, subdirectories will be kept intact.
 
 #### Scripts folder
 
