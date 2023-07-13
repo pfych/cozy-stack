@@ -4,9 +4,23 @@
   "description": "A gift to my friends",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "esbuild src/index.ts --platform=node --bundle --external:esbuild --sourcemap=both --outfile=build/build.js"
   },
   "keywords": [],
   "author": "Pfych",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/minimist": "1.2.2",
+    "@types/node": "20.4.2",
+    "esbuild": "0.18.12",
+    "marked": "5.1.1",
+    "minimist": "1.2.8",
+    "prettier": "3.0.0",
+    "sass": "1.63.6",
+    "typescript": "5.1.6"
+  },
+  "dependencies": {
+    "@types/marked": "^5.0.0",
+    "glob": "^10.3.3"
+  }
 }
