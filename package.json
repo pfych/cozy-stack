@@ -1,10 +1,12 @@
 {
   "name": "cozy-stack",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A gift to my friends",
-  "main": "index.js",
+  "bin": {
+    "cozy-stack": "bin/cozy-stack.js"
+  },
   "scripts": {
-    "compile": "esbuild src/index.ts --platform=node --bundle --external:esbuild --sourcemap=both --outfile=build/build.js"
+    "prepare": "esbuild src/index.ts --platform=node --bundle --external:esbuild --banner:js='#!/usr/bin/env node' --outfile=bin/cozy-stack.js"
   },
   "keywords": [],
   "author": "Pfych",

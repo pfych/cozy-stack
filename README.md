@@ -29,7 +29,7 @@ title: My first post
 Hello World
 ```
 
-In this example, the `main.html` template will be used, `test.scss` will be imported and `test.ts` will also be imported.
+In this example, the `main.html` template will be used, `test.scss` will be imported and `test.ts` will also be imported. Only `template:` is mandatory.
 
 
 ### Folder structure
