@@ -2,6 +2,7 @@ import * as path from 'path';
 import { glob } from 'glob';
 import { marked } from 'marked';
 import fs from 'fs/promises';
+import { combineTemplate } from './combine-template';
 
 export const buildContent = async (
   input: string,
@@ -23,8 +24,7 @@ export const buildContent = async (
       const metaString = content.split('---');
 
       if (!metaString[1]) {
-        console.error(`ERROR: ${file} missing metadata!`);
-        return;
+        throw new Error(`${file} missing metadata!`);
       }
 
       const metaArray = metaString[1].split('\n').filter((line) => line);
@@ -45,7 +45,7 @@ export const buildContent = async (
 
       await fs.writeFile(
         path.join(outputPath, file.replace('.md', '.html')),
-        html,
+        await combineTemplate(metadata, html, inputPath),
       );
     }),
   );
