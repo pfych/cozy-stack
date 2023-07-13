@@ -9,7 +9,7 @@ specifiers:
   marked: 5.1.1
   minimist: 1.2.8
   prettier: 3.0.0
-  sass: 1.63.6
+  sass: 1.56.1
   typescript: 5.1.6
 
 dependencies:
@@ -23,7 +23,7 @@ devDependencies:
   marked: 5.1.1
   minimist: 1.2.8
   prettier: 3.0.0
-  sass: 1.63.6
+  sass: 1.56.1
   typescript: 5.1.6
 
 packages:
@@ -537,9 +537,9 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /sass/1.63.6:
-    resolution: {integrity: sha512-MJuxGMHzaOW7ipp+1KdELtqKbfAWbH7OLIdoSMnVe3EXPMTmxTmlaZDCTsgIpPCs3w99lLo9/zDKkOrJuT5byw==}
-    engines: {node: '>=14.0.0'}
+  /sass/1.56.1:
+    resolution: {integrity: sha512-VpEyKpyBPCxE7qGDtOcdJ6fFbcpOM+Emu7uZLxVrkX8KVU/Dp5UF7WLvzqRuUhB6mqqQt1xffLoG+AndxTZrCQ==}
+    engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
       chokidar: 3.5.3

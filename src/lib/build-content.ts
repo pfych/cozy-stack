@@ -11,15 +11,28 @@ export const buildContent = async (
   const inputPath = path.resolve(input);
   const outputPath = path.resolve(output);
 
-  const allFiles = await glob(`${inputPath}/**/*.*`);
+  const allFiles = await glob(`${inputPath}/content/**/*.*`);
+  await Promise.all(
+    allFiles.map((file) =>
+      fs.mkdir(
+        file
+          .replace(path.join(inputPath, 'content'), outputPath)
+          .split('/')
+          .filter((section) => !section.includes('.'))
+          .join('/'),
+        { recursive: true },
+      ),
+    ),
+  );
+
   const markdownFiles = allFiles
     .filter((file) => file.includes('.md'))
-    .map((file) => file.replace(inputPath, ''));
+    .map((file) => file.replace(path.join(inputPath, 'content'), ''));
 
   await Promise.all(
     markdownFiles.map(async (file) => {
       const content = (
-        await fs.readFile(path.join(inputPath, file))
+        await fs.readFile(path.join(path.join(inputPath, 'content'), file))
       ).toString();
       const metaString = content.split('---');
 
@@ -36,6 +49,9 @@ export const buildContent = async (
         {},
       );
 
+      metadata['scripts'] = metadata['scripts']?.split(' ');
+      metadata['stylesheets'] = metadata['stylesheets']?.split(' ');
+
       const contentWithoutMeta = metaString.slice(2).join('---');
       const html = await marked.parse(contentWithoutMeta, {
         async: true,
@@ -43,9 +59,11 @@ export const buildContent = async (
         headerIds: false,
       });
 
+      const htmlInTemplate = await combineTemplate(metadata, html, inputPath);
+
       await fs.writeFile(
         path.join(outputPath, file.replace('.md', '.html')),
-        await combineTemplate(metadata, html, inputPath),
+        htmlInTemplate,
       );
     }),
   );

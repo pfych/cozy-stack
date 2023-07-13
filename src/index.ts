@@ -1,6 +1,8 @@
 import minimist from 'minimist';
 import { buildContent } from './lib/build-content';
 import fs from 'fs/promises';
+import { buildCSS } from './lib/build-css';
+import { buildJS } from './lib/build-js';
 const _argv = minimist(process.argv.slice(0));
 
 (async () => {
@@ -28,5 +30,7 @@ const _argv = minimist(process.argv.slice(0));
     console.error(`ERROR: Path ${argv.i} does not exist`);
   }
 
+  await buildJS(argv.i, argv.o);
+  await buildCSS(argv.i, argv.o);
   await buildContent(argv.i, argv.o);
 })();
