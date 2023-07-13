@@ -6,31 +6,42 @@ import { buildJS } from './lib/build-js';
 const _argv = minimist(process.argv.slice(0));
 
 (async () => {
-  // avoid casting _argv
-  const argv = {
-    i: _argv.i,
-    o: _argv.o,
-    port: _argv.port,
-    bind: _argv.bind,
-  };
+  try {
+    if (_argv.h) {
+      console.log('Usage: npx cozy-stack [options]\n');
+      console.log('Options:');
+      console.log('-o     output directory');
+      console.log('-i     input directory');
+      console.log('\n');
+    }
 
-  if (!argv.i) {
-    console.error('ERROR: No provided target folder!');
-    return;
+    // avoid casting _argv
+    const argv = {
+      i: _argv.i,
+      o: _argv.o,
+      port: _argv.port,
+      bind: _argv.bind,
+    };
+
+    if (!argv.i) {
+      throw new Error('No provided target folder!');
+    }
+
+    if (!argv.o) {
+      throw new Error('No provided output folder!');
+    }
+
+    const inputFolder = await fs.stat(argv.i);
+
+    if (!inputFolder) {
+      throw new Error(`ERROR: Path ${argv.i} does not exist`);
+    }
+
+    await buildJS(argv.i, argv.o);
+    await buildCSS(argv.i, argv.o);
+    await buildContent(argv.i, argv.o);
+  } catch (e) {
+    console.error('FATAL ERROR:');
+    console.error(e.message);
   }
-
-  if (!argv.o) {
-    console.error('ERROR: No provided output folder!');
-    return;
-  }
-
-  const inputFolder = await fs.stat(argv.i);
-
-  if (!inputFolder) {
-    console.error(`ERROR: Path ${argv.i} does not exist`);
-  }
-
-  await buildJS(argv.i, argv.o);
-  await buildCSS(argv.i, argv.o);
-  await buildContent(argv.i, argv.o);
 })();
