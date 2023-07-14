@@ -1,7 +1,7 @@
 import path from 'path';
 import { glob } from 'glob';
-import esbuild from 'esbuild';
 import fs from 'fs/promises';
+import { exec } from 'child_process';
 
 export const buildJS = async (input: string, output: string): Promise<void> => {
   const inputPath = path.resolve(input);
@@ -13,15 +13,23 @@ export const buildJS = async (input: string, output: string): Promise<void> => {
     file.replace(inputPath, ''),
   );
 
-  await Promise.all(
-    allFiles.map(async (file) => {
-      console.log(`Compiling ${path.join(inputPath, file)}`);
-      await esbuild.build({
-        entryPoints: [path.join(inputPath, file)],
-        minify: true,
-        platform: 'browser',
-        outfile: path.join(outputPath, file).replace('.ts', '.min.js'),
-      });
-    }),
-  );
+  allFiles.forEach((file) => {
+    console.log(`Bundling ${file}`);
+
+    /** @TODO investigate better esbuild bundling! */
+    exec(
+      `npx esbuild ${path.join(
+        inputPath,
+        file,
+      )} --platform=browser --bundle --external:esbuild --outfile=${path
+        .join(outputPath, file)
+        .replace('.ts', '.min.js')}`,
+      (error, stdout, stderr) => {
+        if (error) {
+          console.error(stderr);
+          throw new Error(error.message);
+        }
+      },
+    );
+  });
 };
