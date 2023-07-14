@@ -29,10 +29,14 @@ export const buildContent = async (
     .filter((file) => file.includes('.md'))
     .map((file) => file.replace(path.join(inputPath, 'content'), ''));
 
+  const otherFiles = allFiles
+    .filter((file) => !file.includes('.md'))
+    .map((file) => file.replace(path.join(inputPath, 'content'), ''));
+
   await Promise.all(
     markdownFiles.map(async (file) => {
       const content = (
-        await fs.readFile(path.join(path.join(inputPath, 'content'), file))
+        await fs.readFile(path.join(inputPath, 'content', file))
       ).toString();
       const metaString = content.split('---');
 
@@ -64,6 +68,18 @@ export const buildContent = async (
       await fs.writeFile(
         path.join(outputPath, file.replace('.md', '.html')),
         htmlInTemplate,
+      );
+    }),
+  );
+
+  await Promise.all(
+    otherFiles.map(async (file) => {
+      await fs.cp(
+        path.join(inputPath, 'content', file),
+        path.join(outputPath, file),
+        {
+          recursive: true,
+        },
       );
     }),
   );

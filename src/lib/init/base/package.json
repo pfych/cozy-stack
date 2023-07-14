@@ -1,0 +1,19 @@
+{
+  "name": "my-cozy-site",
+  "version": "1.0.0",
+  "description": "My Cozy Site",
+  "scripts": {
+    "build": "npx cozy-stack -i . -o build && npx prettier --write build"
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "all",
+    "arrowParens": "always",
+    "printWidth": 80
+  },
+  "dependencies": {
+    "prettier": "3.0.0"
+  }
+}
