@@ -1,6 +1,8 @@
 # Cozy Stack
 
-> A Gift for my friends
+A CLI tool for creating simple websites.
+
+> a Gift for my friends
 
 Cozy stack is a CLI tool that converts a folder of HTML, Markdown, SCSS & Typescript into a small bundle of plain HTML, CSS & JS.
 
@@ -9,6 +11,7 @@ This bundle can then be deployed anywhere that serves HTML.
 ## Getting started
 
 ```sh
+npx install -g esbuild # Required to compile typescript
 npx cozy-stack -i ~/my-site -o /tmp/my-build # Build to a folder
 ```
 
@@ -19,7 +22,7 @@ Markdown must contain a metadata header:
 ```markdown
 ---
 template: main.html
-stylesheets: test.scss
+styles: test.scss
 scripts: test.ts
 title: My first post
 ---

@@ -5,7 +5,7 @@ export interface Metadata {
   template?: string;
   title?: string;
   scripts?: string[];
-  stylesheets?: string[];
+  styles?: string[];
 }
 
 export const combineTemplate = async (
@@ -34,13 +34,13 @@ export const combineTemplate = async (
 
   const header = `
     <title>${metadata.title || 'Cozy Stack'}</title>
-    ${metadata.scripts?.map(
+    ${(metadata.scripts || [])?.map(
       (script) =>
         `<script src="/scripts/${script
           .replace('.js', '.min.js')
           .replace('.ts', '.min.js')}"></script>`,
     )}
-    ${metadata.stylesheets?.map(
+    ${(metadata.styles || [])?.map(
       (stylesheet) =>
         `<link href="/styles/${stylesheet.replace(
           'scss',

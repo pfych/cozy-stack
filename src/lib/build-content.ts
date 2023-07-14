@@ -50,7 +50,7 @@ export const buildContent = async (
       );
 
       metadata['scripts'] = metadata['scripts']?.split(' ');
-      metadata['stylesheets'] = metadata['stylesheets']?.split(' ');
+      metadata['styles'] = metadata['styles']?.split(' ');
 
       const contentWithoutMeta = metaString.slice(2).join('---');
       const html = await marked.parse(contentWithoutMeta, {

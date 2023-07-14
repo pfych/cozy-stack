@@ -15,12 +15,12 @@ export const buildJS = async (input: string, output: string): Promise<void> => {
 
   await Promise.all(
     allFiles.map(async (file) => {
+      console.log(`Compiling ${path.join(inputPath, file)}`);
       await esbuild.build({
         entryPoints: [path.join(inputPath, file)],
         minify: true,
         platform: 'browser',
         outfile: path.join(outputPath, file).replace('.ts', '.min.js'),
-        bundle: true,
       });
     }),
   );

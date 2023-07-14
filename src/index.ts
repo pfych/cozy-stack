@@ -3,6 +3,7 @@ import { buildContent } from './lib/build-content';
 import fs from 'fs/promises';
 import { buildCSS } from './lib/build-css';
 import { buildJS } from './lib/build-js';
+import { initProject } from './lib/init/init-project';
 const _argv = minimist(process.argv.slice(0));
 
 (async () => {
@@ -13,6 +14,11 @@ const _argv = minimist(process.argv.slice(0));
       console.log('-o     output directory');
       console.log('-i     input directory');
       console.log('\n');
+    }
+
+    if (_argv.init) {
+      await initProject(_argv.init);
+      return;
     }
 
     // avoid casting _argv
